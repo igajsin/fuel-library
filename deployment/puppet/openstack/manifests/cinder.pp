@@ -122,13 +122,14 @@ class openstack::cinder(
       enabled        => true,
     }
   }
+
   if $manage_volumes {
     class { 'cinder::volume':
       package_ensure => $::openstack_version['cinder'],
       enabled        => true,
     }
     case $manage_volumes {
-      true, 'iscsi': {
+      'iscsi': {
         if ($physical_volume) {
           class { 'lvm':
             vg     => $volume_group,
@@ -139,6 +140,13 @@ class openstack::cinder(
         class { 'cinder::volume::iscsi':
           iscsi_ip_address => $iscsi_bind_host,
           volume_group     => $volume_group,
+        }
+      }
+      'vmdk': {
+      class {'cinder::volume::vmdk':
+        host_ip => $vcenter_host_ip,
+        host_username => $vcenter_host_username,
+        host_password => $vcenter_host_password,
         }
       }
       'ceph': {
