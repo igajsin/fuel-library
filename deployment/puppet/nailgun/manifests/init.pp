@@ -50,6 +50,9 @@ class nailgun(
   $puppet_master_hostname = "${hostname}.${domain}",
   $puppet_master_ip = $ipaddress,
 
+  $keystone_admin_token = $keystone_admin_token,
+  $keystone_host        = $keystone_host,
+
   ) {
 
   Exec  {path => '/usr/bin:/bin:/usr/sbin:/sbin'}
@@ -163,6 +166,9 @@ class nailgun(
     mco_connector => $mco_connector,
 
     puppet_master_hostname => $puppet_master_hostname,
+
+    keystone_admin_token => $::fuel_settings['keystone']['admin_token'],
+    keystone_host        => $::fuel_settings['ADMIN_NETWORK']['ipaddress'],
   }
 
   class {"nailgun::astute":
@@ -220,6 +226,10 @@ class nailgun(
     dns_upstream       => $dns_upstream,
     domain_name        => $dns_domain,
     dns_search         => $dns_search,
+
+    mco_user           => $mco_user,
+    mco_pass           => $mco_password,
+
     dhcp_start_address => $dhcp_start_address,
     dhcp_end_address   => $dhcp_end_address,
     dhcp_netmask       => $dhcp_netmask,
