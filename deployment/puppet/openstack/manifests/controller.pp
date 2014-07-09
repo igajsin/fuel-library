@@ -451,10 +451,7 @@ class openstack::controller (
         max_retries          => $max_retries,
         max_pool_size        => $max_pool_size,
         max_overflow         => $max_overflow,
-        idle_timeout         => $idle_timeout,
-        vmware_host_ip       => $vmware_host_ip,
-        vmware_host_username => $vmware_host_username,
-        vmware_host_password => $vmware_host_password
+        idle_timeout         => $idle_timeout
       } # end class
     } else { # defined
       if $manage_volumes {

@@ -132,7 +132,7 @@ class openstack::cinder(
       enabled        => true,
     }
     case $manage_volumes {
-      'iscsi': {
+      true, 'iscsi': {
         if ($physical_volume) {
           class { 'lvm':
             vg     => $volume_group,
